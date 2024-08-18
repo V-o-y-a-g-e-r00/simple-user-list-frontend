@@ -31,7 +31,7 @@ export default {
   --theme-hover-color: #DFF4FF;
   --theme-active-color: #AFE2FF;
 
-  --default-transition: 0.3s;
+  --default-transition: .7s;
 }
 * {
   margin: 0;

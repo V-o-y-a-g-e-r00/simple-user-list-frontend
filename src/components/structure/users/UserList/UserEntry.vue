@@ -1,5 +1,5 @@
 <template>
-  <div class="user-entry">
+  <div class="user-entry" :class="{selected: isSelected}">
     <div class="avatar-holder">
       <svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="84" height="84" fill="var(--theme-color-2)"/>
@@ -21,11 +21,21 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+    selectedUserId: {
+      type: Number,
+      required: false,
+      default: null,
     }
   },
   methods: {
     getEmailHref(email){
       return `mailto:${email}`;
+    }
+  },
+  computed: {
+    isSelected() {
+      return this.$props.selectedUserId === this.user.id;
     }
   }
 
@@ -43,8 +53,9 @@ export default {
     transition: var(--default-transition);
     overflow: hidden;
     flex-shrink: 0;
+    min-width: 25rem;
   }
-  .user-entry:hover {
+  .user-entry:hover:not(.selected) {
     background: var(--theme-hover-color);
     transition: var(--default-transition);
   }
@@ -57,5 +68,8 @@ export default {
   }
   .user-info h2 {
     margin-bottom: 7px;
+  }
+  .selected {
+    background: var(--theme-active-color);
   }
 </style>
