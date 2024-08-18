@@ -8,7 +8,7 @@
         <UserFilter />
       </section>
       <section class="central-column">
-        <UserList :users="users"/>
+        <UserList :users="users" :isUsersLoading="isUsersLoading"/>
       </section>
       <section class="right-column">
          <UserCard />
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       users: [],
+      isUsersLoading: false,
     }
   },
   async created() {
@@ -45,8 +46,14 @@ export default {
   },
   methods: {
     async getUsersFromBackend() {
-      const result = await axiosInstance.get("/users");
-      this.users = result.data;
+      try {
+        this.isUsersLoading = true;
+        const result = await axiosInstance.get("/users");
+        // console.log(result);
+        this.users = result.data;
+      } finally {
+          this.isUsersLoading = false;
+      }
     }
   }
 }

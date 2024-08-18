@@ -9,7 +9,7 @@
     </div>
     <div class="user-info">
       <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-      Возраст: {{ user.age }} {{ user.email }}
+      Возраст: {{ user.age }} <a :href="getEmailHref(user.email)">{{ user.email }}</a>
     </div>
   </div>
 </template>
@@ -21,6 +21,11 @@ export default {
     user: {
       type: Object,
       required: true,
+    }
+  },
+  methods: {
+    getEmailHref(email){
+      return `mailto:${email}`;
     }
   }
 
@@ -36,6 +41,8 @@ export default {
     column-gap: 0.8125rem;
     cursor: pointer;
     transition: var(--default-transition);
+    overflow: hidden;
+    flex-shrink: 0;
   }
   .user-entry:hover {
     background: var(--theme-hover-color);
@@ -47,5 +54,8 @@ export default {
     flex-shrink: 0;
     border-radius: 50%;
     overflow: hidden;
+  }
+  .user-info h2 {
+    margin-bottom: 7px;
   }
 </style>

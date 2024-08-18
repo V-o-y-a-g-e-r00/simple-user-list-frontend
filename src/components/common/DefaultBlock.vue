@@ -26,6 +26,9 @@ export default {
     flex-direction: column;
   }
   .content {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
   }
 </style>
