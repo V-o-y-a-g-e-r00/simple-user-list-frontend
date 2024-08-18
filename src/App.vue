@@ -12,6 +12,9 @@ export default {
   components: {
     ThemeProvider,
     UsersPage,
+  },
+  created() {
+    document.title = "Users";
   }
 }
 </script>

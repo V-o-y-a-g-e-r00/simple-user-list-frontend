@@ -6,26 +6,11 @@
     <main>
       <section class="left-column">
         <UserFilter />
-        <!-- <DefaultBlock>
-          <template #header>
-              <h2>Filters</h2>
-          </template>
-          <template #content>
-            <div>
-              name
-            </div>
-            <div>
-              age
-            </div>
-          </template>
-        </DefaultBlock> -->
       </section>
       <section class="central-column">
-        <UserList />
-        <!-- central-column -->
+        <UserList :users="users"/>
       </section>
       <section class="right-column">
-        <!-- right-column -->
          <UserCard />
       </section>
     </main>
@@ -33,17 +18,36 @@
 </template>
 
 <script>
-// import DefaultBlock from "@/components/common/DefaultBlock.vue";
 import UserFilter from '@/components/structure/users/UserFilter.vue';
 import UserList from '@/components/structure/users/UserList.vue';
 import UserCard from '@/components/structure/users/UserCard.vue';
+
+import axios from 'axios';
+const axiosInstance = axios.create({
+  baseURL: process.env.VUE_APP_BASE_URL,
+  // baseURL: "http://localhost:3000",
+})
+
 export default {
   name: "UserPage",
   components: {
-    // DefaultBlock,
     UserFilter,
     UserList,
     UserCard,
+  },
+  data() {
+    return {
+      users: [],
+    }
+  },
+  async created() {
+    await this.getUsersFromBackend();
+  },
+  methods: {
+    async getUsersFromBackend() {
+      const result = await axiosInstance.get("/users");
+      this.users = result.data;
+    }
   }
 }
 </script>
@@ -51,33 +55,38 @@ export default {
 <style scoped>
 .users-page {
   margin: 0 3.125rem;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 header {
   height: 9.375rem;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 main {
   padding-bottom: 3.125rem;
   flex-grow: 1;
   display: flex;
   column-gap: 3.125rem;
-  border: 1px solid blue;
+  overflow: hidden;
+  /* border: 1px solid blue; */
 }
 .left-column {
   flex-basis: 16%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
 .central-column {
   flex-basis: 44%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
+  overflow: hidden;
+  max-height: 100%;
 }
 .right-column {
   flex-basis: 40%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
 </style>

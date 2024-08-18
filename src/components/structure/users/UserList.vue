@@ -1,10 +1,7 @@
 <template>
   <DefaultBlock>
     <template #content>
-      user-entry
-      user-entry
-      <UserEntry class="user-entry-positioner"/>
-      <UserEntry class="user-entry-positioner"/>
+      <UserEntry v-for="user in users" :key="user.id" class="user-entry-positioner" :user="user"/>
     </template>
   </DefaultBlock>
 </template>
@@ -17,6 +14,12 @@ export default {
   components: {
     DefaultBlock,
     UserEntry
+  },
+  props: {
+    users: {
+      type: Object,
+      required: true,
+    }
   }
 }
 </script>

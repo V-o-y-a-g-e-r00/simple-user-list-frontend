@@ -24,8 +24,14 @@ export default {
   --default-border-radius: 0.9375rem;
 
   --theme-color-1: #FFFFFF;
-  /* --default-theme-color-2: #F4F4F4; */
-  --theme-color-2: #656565;
+  --theme-color-2: #F4F4F4;
+  /* --theme-color-2: #656565; */
+  --theme-color-error: red;
+
+  --theme-hover-color: #DFF4FF;
+  --theme-active-color: #AFE2FF;
+
+  --default-transition: 0.3s;
 }
 * {
   margin: 0;
@@ -64,6 +70,15 @@ h2 {
 a {
   color: var(--link-color);
 }
-
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  /* background: #f1f1f1; */
+}
+::-webkit-scrollbar-thumb {
+  background: var(--header-font-color);
+  border-radius: 5px;
+}
 
 </style>

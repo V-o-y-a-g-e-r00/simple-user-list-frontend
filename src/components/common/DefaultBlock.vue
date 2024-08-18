@@ -21,5 +21,11 @@ export default {
     background: var(--theme-color-2);
     border-radius: var(--default-border-radius);
     padding: 1.875rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    overflow: auto;
   }
 </style>
