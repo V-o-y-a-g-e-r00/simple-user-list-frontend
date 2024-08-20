@@ -2,7 +2,9 @@
   <div class="user-card">
     <DefaultBlock>
       <template #content>
-        <div v-if="false">Image</div>
+        <div v-if="user.profile_image_uri" class="img-holder">
+          <img :src="user.profile_image_uri" alt="" />
+        </div>
         <div v-else>
           <DragAndDrop
             class="drag-and-drop-positioner"
@@ -46,6 +48,9 @@ export default {
 
 <style scoped>
 .user-card {
+}
+.img-holder img {
+  width: 100%;
 }
 .drag-and-drop-positioner {
   height: 25rem;

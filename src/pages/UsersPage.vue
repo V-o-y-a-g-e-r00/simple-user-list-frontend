@@ -36,7 +36,6 @@ import UserCard from "@/components/structure/users/UserCard.vue";
 import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
-  // baseURL: "http://localhost:3000",
 });
 
 export default {
@@ -75,10 +74,17 @@ export default {
     },
     async imageChosenHandler(file) {
       console.log(file);
-      const fileInBase64 = fileToBase64(file);
-      axiosInstance.patch(`/users/${this.selectedUserId}`, {
-        profile_image: fileInBase64,
-      });
+      const fileInBase64 = await fileToBase64(file);
+      const result = await axiosInstance.patch(
+        `/users/${this.selectedUserId}`,
+        {
+          profile_image: fileInBase64,
+        }
+      );
+      const userImageUri = result.data.profile_image_uri;
+      console.log("userImageUri=", userImageUri);
+      this.selectedUser.profile_image_uri =
+        process.env.VUE_APP_BASE_URL + userImageUri;
     },
   },
   computed: {
