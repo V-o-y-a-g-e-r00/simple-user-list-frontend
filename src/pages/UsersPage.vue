@@ -5,11 +5,17 @@
     </header>
     <main>
       <section class="left-column">
-        <UserFilter />
+        <UserFilter
+          :filters="filters"
+          :sorters="sorters"
+          @age-filter-changed="ageFilterChangedHandler"
+          @last-name-sorter-changed="lastNameSorterChangedHandler"
+          @age-sorter-changed="ageSorterChangedHandler"
+        />
       </section>
       <section class="central-column">
         <UserList
-          :users="users"
+          :users="sortedUsers"
           :isUsersLoading="isUsersLoading"
           :usersLoadingError="usersLoadingError"
           :selected-user-id="selectedUserId"
@@ -34,6 +40,7 @@ import UserList from "@/components/structure/users/UserList.vue";
 import UserCard from "@/components/structure/users/UserCard.vue";
 
 import axios from "axios";
+import { SORT_DIRECTIONS } from "@/components/common/ToggleSorter.vue";
 const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
 });
@@ -51,6 +58,25 @@ export default {
       isUsersLoading: false,
       usersLoadingError: null,
       selectedUserId: null,
+      filters: {
+        ageFilter: {
+          isActive: true,
+          lowestRangeValue: 18,
+          highestRangeValue: 100,
+          minAge: 18,
+          maxAge: 100,
+        },
+      },
+      sorters: {
+        lastNameSorter: {
+          isActive: false,
+          sortDirection: SORT_DIRECTIONS.SMALLEST_TO_LARGEST,
+        },
+        ageSorter: {
+          isActive: false,
+          sortDirection: SORT_DIRECTIONS.SMALLEST_TO_LARGEST,
+        },
+      },
     };
   },
   async created() {
@@ -61,7 +87,6 @@ export default {
       try {
         this.isUsersLoading = true;
         const result = await axiosInstance.get("/users");
-        // console.log(result);
         this.users = result.data;
       } catch (error) {
         this.usersLoadingError = error;
@@ -85,10 +110,88 @@ export default {
       console.log("userImageUri=", userImageUri);
       this.selectedUser.profile_image_uri = userImageUri;
     },
+    ageFilterChangedHandler({ minValue, maxValue }) {
+      console.log("ageFilterChangedHandler: start");
+
+      this.filters.ageFilter.minAge = minValue;
+      this.filters.ageFilter.maxAge = maxValue;
+    },
+    lastNameSorterChangedHandler({ isActive, sortDirection }) {
+      console.log("lastNameSorterChangedHandler: start");
+      this.sorters.lastNameSorter.isActive = isActive;
+      this.sorters.lastNameSorter.sortDirection = sortDirection;
+    },
+    ageSorterChangedHandler({ isActive, sortDirection }) {
+      console.log("ageSorterChangedHandler: sortDirection=", sortDirection);
+      this.sorters.ageSorter.isActive = isActive;
+      this.sorters.ageSorter.sortDirection = sortDirection;
+    },
   },
   computed: {
     selectedUser() {
       return this.users.find((user) => user.id === this.selectedUserId);
+    },
+    filteredUsers() {
+      return this.users.filter((user) => {
+        if (!this.filters.ageFilter.isActive) {
+          return this.users;
+        }
+        if (
+          this.filters.ageFilter.minAge <= user.age &&
+          this.filters.ageFilter.maxAge >= user.age
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    },
+    sortedUsers() {
+      const compare = (a, b) => {
+        if (this.sorters.lastNameSorter.isActive) {
+          console.log("point1");
+          if (
+            this.sorters.lastNameSorter.sortDirection ===
+            SORT_DIRECTIONS.SMALLEST_TO_LARGEST
+          ) {
+            console.log("point2");
+            if (a.last_name < b.last_name) {
+              return -1;
+            } else {
+              return 1;
+            }
+          } else {
+            console.log("point3");
+            if (a.last_name > b.last_name) {
+              return -1;
+            } else {
+              return 1;
+            }
+          }
+        }
+        if (this.sorters.ageSorter.isActive) {
+          if (
+            this.sorters.ageSorter.sortDirection ===
+            SORT_DIRECTIONS.SMALLEST_TO_LARGEST
+          ) {
+            if (a.age < b.age) {
+              return -1;
+            } else {
+              return 1;
+            }
+          } else {
+            if (a.age > b.age) {
+              return -1;
+            } else {
+              return 1;
+            }
+          }
+        }
+        return 0;
+      };
+      const sortedUsers = this.filteredUsers.slice().sort(compare);
+      console.log("sortedUsers=", sortedUsers);
+      return sortedUsers;
     },
   },
 };
@@ -97,7 +200,6 @@ export default {
 <style scoped>
 .users-page {
   margin: 0 3.125rem;
-  /* border: 1px solid red; */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -115,20 +217,16 @@ main {
   display: flex;
   column-gap: 3.125rem;
   overflow: hidden;
-  /* border: 1px solid blue; */
 }
 .left-column {
   flex-basis: 16%;
-  /* border: 1px solid green; */
 }
 .central-column {
   flex-basis: 44%;
-  /* border: 1px solid green; */
   overflow: hidden;
   max-height: 100%;
 }
 .right-column {
   flex-basis: 40%;
-  /* border: 1px solid green; */
 }
 </style>

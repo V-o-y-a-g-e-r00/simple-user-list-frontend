@@ -61,9 +61,6 @@ export default {
 </script>
 
 <style scoped>
-/* .user-list {
-  min-width: 25rem;
-} */
 .user-entry-positioner:not(:last-child) {
   margin-bottom: 0.9375rem;
 }

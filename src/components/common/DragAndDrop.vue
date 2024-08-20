@@ -86,10 +86,7 @@ export default {
 .drag-and-drop-inner {
   height: 100%;
   border-radius: var(--default-border-radius);
-  border: 0.625rem dashed var(--header-font-color);
-  /* border-width: 0.625rem;
-  border-style: dashed;
-  border-color: var(--header-font-color); */
+  border: 0.625rem dashed var(--theme-color-3);
   display: flex;
   align-items: center;
   justify-content: center;

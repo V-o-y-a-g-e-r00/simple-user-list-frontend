@@ -12,6 +12,18 @@
 <script>
 export default {
   name: "DefaultBlock",
+  props: {
+    isOverflowAuto: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+  },
+  computed: {
+    overflowValue() {
+      return this.isOverflowAuto ? "auto" : "";
+    },
+  },
 };
 </script>
 <style scoped>
@@ -29,6 +41,6 @@ export default {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: v-bind("overflowValue");
 }
 </style>

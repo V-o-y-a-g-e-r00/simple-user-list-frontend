@@ -17,21 +17,27 @@ export default {
   --default-font-size: 1.25rem;
   --default-font-weight: 400;
 
-  --header-font-color: #424242;
-  --default-font-color: #1d1d1d;
-  --link-color: #0032e4;
-
   --default-border-radius: 0.9375rem;
 
   --theme-color-1: #ffffff;
   --theme-color-2: #f4f4f4;
-  /* --theme-color-2: #656565; */
+  --theme-color-3: #424242;
+
   --theme-color-error: red;
 
   --theme-hover-color: #dff4ff;
   --theme-active-color: #afe2ff;
 
-  --default-transition: 0.7s;
+  --theme-color-test-1: #a739b6;
+  --theme-color-test-2: #39b6a5;
+  --theme-color-test-3: #8eb639;
+
+  --header-font-color: var(--theme-color-3);
+  --default-font-color: #1d1d1d;
+  --link-color: #0032e4;
+
+  --default-transition: 0.4s;
+  --default-transition-test: 1s;
 }
 * {
   margin: 0;
@@ -82,7 +88,7 @@ a {
   /* background: #f1f1f1; */
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--header-font-color);
+  background: var(--theme-color-3);
   border-radius: 5px;
 }
 </style>
