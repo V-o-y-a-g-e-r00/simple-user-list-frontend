@@ -8,26 +8,36 @@
         <UserFilter />
       </section>
       <section class="central-column">
-        <UserList :users="users" :isUsersLoading="isUsersLoading" :usersLoadingError="usersLoadingError" :selected-user-id="selectedUserId" @user-selected="userSelectedHandler"/>
+        <UserList
+          :users="users"
+          :isUsersLoading="isUsersLoading"
+          :usersLoadingError="usersLoadingError"
+          :selected-user-id="selectedUserId"
+          @user-selected="userSelectedHandler"
+        />
       </section>
       <section class="right-column">
-         <UserCard v-if="selectedUser" :user="selectedUser" @file-chosen="imageChosenHandler"/>
+        <UserCard
+          v-if="selectedUser"
+          :user="selectedUser"
+          @file-chosen="imageChosenHandler"
+        />
       </section>
     </main>
   </div>
 </template>
 
 <script>
-import {fileToBase64} from "@/utils/utils.ts";
-import UserFilter from '@/components/structure/users/UserFilter.vue';
-import UserList from '@/components/structure/users/UserList.vue';
-import UserCard from '@/components/structure/users/UserCard.vue';
+import { fileToBase64 } from "@/utils/utils.ts";
+import UserFilter from "@/components/structure/users/UserFilter.vue";
+import UserList from "@/components/structure/users/UserList.vue";
+import UserCard from "@/components/structure/users/UserCard.vue";
 
-import axios from 'axios';
+import axios from "axios";
 const axiosInstance = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_URL,
-  baseURL: "http://localhost:3000",
-})
+  baseURL: process.env.VUE_APP_BASE_URL,
+  // baseURL: "http://localhost:3000",
+});
 
 export default {
   name: "UserPage",
@@ -42,7 +52,7 @@ export default {
       isUsersLoading: false,
       usersLoadingError: null,
       selectedUserId: null,
-    }
+    };
   },
   async created() {
     await this.getUsersFromBackend();
@@ -50,16 +60,14 @@ export default {
   methods: {
     async getUsersFromBackend() {
       try {
-
         this.isUsersLoading = true;
         const result = await axiosInstance.get("/users");
         // console.log(result);
         this.users = result.data;
-
-      } catch(error) {
+      } catch (error) {
         this.usersLoadingError = error;
       } finally {
-          this.isUsersLoading = false;
+        this.isUsersLoading = false;
       }
     },
     userSelectedHandler(userId) {
@@ -67,18 +75,18 @@ export default {
     },
     async imageChosenHandler(file) {
       console.log(file);
-      const fileInBase64 = fileToBase64(file)
+      const fileInBase64 = fileToBase64(file);
       axiosInstance.patch(`/users/${this.selectedUserId}`, {
         profile_image: fileInBase64,
       });
-    }
+    },
   },
   computed: {
     selectedUser() {
-      return this.users.find(user => user.id === this.selectedUserId);
-    }
-  }
-}
+      return this.users.find((user) => user.id === this.selectedUserId);
+    },
+  },
+};
 </script>
 
 <style scoped>

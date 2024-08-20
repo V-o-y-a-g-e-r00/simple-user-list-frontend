@@ -1,5 +1,14 @@
 <template>
-  <div class="drag-and-drop" :class="{ active: isDragOver }" @drop.prevent="dropHandler" @dragover.prevent="dragoverHandler" @dragenter.prevent="dragoverHandler" @dragend.prevent="dragendHandler" @dragleave.prevent="dragendHandler" @click="addFileButtonHandler">
+  <div
+    class="drag-and-drop"
+    :class="{ active: isDragOver }"
+    @drop.prevent="dropHandler"
+    @dragover.prevent="dragoverHandler"
+    @dragenter.prevent="dragoverHandler"
+    @dragend.prevent="dragendHandler"
+    @dragleave.prevent="dragendHandler"
+    @click="addFileButtonHandler"
+  >
     <div class="drag-and-drop-inner">
       <h2>Drag and drop image</h2>
     </div>
@@ -11,8 +20,8 @@ export default {
   emits: ["file-chosen"],
   data() {
     return {
-      isDragOver: false
-    }
+      isDragOver: false,
+    };
   },
   methods: {
     dragoverHandler() {
@@ -22,13 +31,13 @@ export default {
       this.isDragOver = false;
     },
     checkFileTypeIsImage(file) {
-      return file.type.match('image.*');
+      return file.type.match("image.*");
     },
     emitFile(file) {
       this.$emit("file-chosen", file);
     },
     checkFileTypeAndEmit(file) {
-      if(this.checkFileTypeIsImage(file)) {
+      if (this.checkFileTypeIsImage(file)) {
         this.emitFile(file);
       }
     },
@@ -55,8 +64,8 @@ export default {
       input.addEventListener("change", changeCallback);
       input.click();
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

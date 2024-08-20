@@ -3,8 +3,8 @@
 </template>
 <script>
 export default {
-  name: "ThemeProvider"
-}
+  name: "ThemeProvider",
+};
 </script>
 <style>
 :root {
@@ -18,28 +18,31 @@ export default {
   --default-font-weight: 400;
 
   --header-font-color: #424242;
-  --default-font-color: #1D1D1D;
-  --link-color: #0032E4;
+  --default-font-color: #1d1d1d;
+  --link-color: #0032e4;
 
   --default-border-radius: 0.9375rem;
 
-  --theme-color-1: #FFFFFF;
-  --theme-color-2: #F4F4F4;
+  --theme-color-1: #ffffff;
+  --theme-color-2: #f4f4f4;
   /* --theme-color-2: #656565; */
   --theme-color-error: red;
 
-  --theme-hover-color: #DFF4FF;
-  --theme-active-color: #AFE2FF;
+  --theme-hover-color: #dff4ff;
+  --theme-active-color: #afe2ff;
 
-  --default-transition: .7s;
+  --default-transition: 0.7s;
 }
 * {
   margin: 0;
 }
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
 }
@@ -56,7 +59,8 @@ body {
 
   position: relative;
 }
-h1, h2 {
+h1,
+h2 {
   color: var(--header-font-color);
 }
 h1 {
@@ -81,5 +85,4 @@ a {
   background: var(--header-font-color);
   border-radius: 5px;
 }
-
 </style>

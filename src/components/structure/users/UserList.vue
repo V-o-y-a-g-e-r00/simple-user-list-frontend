@@ -8,22 +8,29 @@
         <h2>{{ usersLoadingError }}</h2>
       </div>
       <div class="user-list">
-        <UserEntry v-for="user in users" :key="user.id" class="user-entry-positioner" :user="user" :selected-user-id="selectedUserId" @click="selectUser(user.id)"/>
+        <UserEntry
+          v-for="user in users"
+          :key="user.id"
+          class="user-entry-positioner"
+          :user="user"
+          :selected-user-id="selectedUserId"
+          @click="selectUser(user.id)"
+        />
       </div>
     </template>
   </DefaultBlock>
 </template>
 
 <script>
-import DefaultBlock from '@/components/common/DefaultBlock.vue';
-import UserEntry from './UserList/UserEntry.vue';
+import DefaultBlock from "@/components/common/DefaultBlock.vue";
+import UserEntry from "./UserList/UserEntry.vue";
 export default {
   name: "UserList",
   components: {
     DefaultBlock,
-    UserEntry
+    UserEntry,
   },
-  emits: ['user-selected'],
+  emits: ["user-selected"],
   props: {
     users: {
       type: Object,
@@ -32,7 +39,7 @@ export default {
     isUsersLoading: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     usersLoadingError: {
       type: Error,
@@ -42,15 +49,15 @@ export default {
     selectedUserId: {
       type: Number,
       required: false,
-      default: null
-    }
+      default: null,
+    },
   },
   methods: {
     selectUser(userId) {
-      this.$emit('user-selected', userId);
-    }
-  }
-}
+      this.$emit("user-selected", userId);
+    },
+  },
+};
 </script>
 
 <style scoped>

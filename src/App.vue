@@ -1,25 +1,19 @@
 <template>
   <ThemeProvider />
-  <UsersPage />
+  <router-view />
 </template>
 
 <script>
-import ThemeProvider from './components/theme/ThemeProvider.vue'
-import UsersPage from './pages/UsersPage.vue'
-
+import ThemeProvider from "@/components/theme/ThemeProvider.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     ThemeProvider,
-    UsersPage,
   },
-  created() {
-    document.title = "Users";
-  }
-}
+};
 </script>
 
-<style>
+<style lang="scss">
 #app {
   width: 100%;
   height: 100%;
