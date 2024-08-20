@@ -77,11 +77,11 @@ export default {
   border-radius: var(--default-border-radius);
   cursor: pointer;
   user-select: none;
-  transition: var(--default-transition);
+  transition: background-color var(--default-transition);
 }
 .drag-and-drop:hover {
   background: var(--theme-hover-color);
-  transition: var(--default-transition);
+  transition: background-color var(--default-transition);
 }
 .drag-and-drop-inner {
   height: 100%;

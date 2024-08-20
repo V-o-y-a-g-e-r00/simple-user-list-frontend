@@ -2,15 +2,19 @@
   <div class="user-card">
     <DefaultBlock>
       <template #content>
-        <div v-if="user.profile_image_uri" class="img-holder">
-          <img :src="user.profile_image_uri" alt="" />
-        </div>
-        <div v-else>
+        <div class="img-holder">
+          <img
+            v-if="user.profile_image_uri"
+            :src="user.profile_image_uri"
+            alt=""
+          />
           <DragAndDrop
-            class="drag-and-drop-positioner"
+            v-else
             @file-chosen="imageChosenHandler"
+            class="drag-and-drop-positioner"
           />
         </div>
+
         <h2 class="user-name">{{ user.first_name }} {{ user.last_name }}</h2>
         Возраст: {{ user.age }}
         <a :href="getEmailHref(user.email)">{{ user.email }}</a>
@@ -49,8 +53,13 @@ export default {
 <style scoped>
 .user-card {
 }
-.img-holder img {
+.img-holder {
+  display: flex;
+}
+.img-holder > * {
   width: 100%;
+  max-height: calc(100vh - 9.375rem - 12.125rem);
+  object-fit: contain;
 }
 .drag-and-drop-positioner {
   height: 25rem;
