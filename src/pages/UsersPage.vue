@@ -83,8 +83,7 @@ export default {
       );
       const userImageUri = result.data.profile_image_uri;
       console.log("userImageUri=", userImageUri);
-      this.selectedUser.profile_image_uri =
-        process.env.VUE_APP_BASE_URL + userImageUri;
+      this.selectedUser.profile_image_uri = userImageUri;
     },
   },
   computed: {

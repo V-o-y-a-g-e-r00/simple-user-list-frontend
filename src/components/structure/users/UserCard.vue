@@ -3,11 +3,7 @@
     <DefaultBlock>
       <template #content>
         <div class="img-holder">
-          <img
-            v-if="user.profile_image_uri"
-            :src="user.profile_image_uri"
-            alt=""
-          />
+          <img v-if="user.profile_image_uri" :src="profileImageUrl" alt="" />
           <DragAndDrop
             v-else
             @file-chosen="imageChosenHandler"
@@ -26,6 +22,7 @@
 <script>
 import DefaultBlock from "@/components/common/DefaultBlock.vue";
 import DragAndDrop from "@/components/common/DragAndDrop.vue";
+import { getURL } from "@/utils/utils";
 export default {
   name: "UserCard",
   components: {
@@ -45,6 +42,11 @@ export default {
     },
     imageChosenHandler(file) {
       this.$emit("file-chosen", file);
+    },
+  },
+  computed: {
+    profileImageUrl() {
+      return getURL(this.user.profile_image_uri);
     },
   },
 };
