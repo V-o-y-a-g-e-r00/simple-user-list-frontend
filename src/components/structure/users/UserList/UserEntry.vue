@@ -86,11 +86,11 @@ export default {
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
-  object-fit: contain;
 }
 .avatar-holder > * {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .user-info h2 {
   margin-bottom: 7px;
